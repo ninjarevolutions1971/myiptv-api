@@ -28,9 +28,10 @@ def create_user(user: UserCreate):
     db = SessionLocal()
 
     new_user = User(
-        username=user.username,
-        email=user.email
-    )
+    username=user.username,
+    password=user.password,
+    email=user.email
+)
 
     db.add(new_user)
     db.commit()
@@ -39,10 +40,11 @@ def create_user(user: UserCreate):
     db.close()
 
     return {
-        "id": new_user.id,
-        "username": new_user.username,
-        "email": new_user.email
-    }
+    "id": new_user.id,
+    "username": new_user.username,
+    "password": new_user.password,
+    "email": new_user.email
+}
 
 
 @app.get("/users")
