@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 from database import engine, SessionLocal
-from models import Base, User
 from models import Base, User, Playlist
 
 Base.metadata.create_all(bind=engine)
@@ -12,7 +11,10 @@ app = FastAPI()
 class UserCreate(BaseModel):
     username: str
     email: str
-
+    
+class PlaylistCreate(BaseModel):
+    name: str
+    url: str
 
 @app.get("/")
 def root():
