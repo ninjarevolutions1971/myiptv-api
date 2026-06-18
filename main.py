@@ -11,6 +11,7 @@ app = FastAPI()
 
 class UserCreate(BaseModel):
     username: str
+    password: str
     email: str
     
 class PlaylistCreate(BaseModel):
