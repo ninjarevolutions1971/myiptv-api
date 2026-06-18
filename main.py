@@ -13,6 +13,7 @@ class UserCreate(BaseModel):
     username: str
     password: str
     email: str
+    playlist_id: int
     
 class PlaylistCreate(BaseModel):
     name: str
