@@ -19,6 +19,10 @@ class PlaylistCreate(BaseModel):
     name: str
     url: str
 
+class LoginRequest(BaseModel):
+    username: str
+    password: str
+
 @app.get("/")
 def root():
     return {"message": "MyIPTV API Online"}
@@ -108,6 +112,55 @@ def get_playlists():
     db.close()
 
     return result
+
+@app.get("/playlists")
+def get_playlists():
+    db = SessionLocal()
+
+    playlists = db.query(Playlist).all()
+
+    result = [
+        {
+            "id": p.id,
+            "name": p.name,
+            "url": p.url
+        }
+        for p in playlists
+    ]
+
+    db.close()
+
+    return result
+
+
+@app.post("/login")
+def login(user_data: LoginRequest):
+    db = SessionLocal()
+
+    user = db.query(User).filter(
+        User.username == user_data.username,
+        User.password == user_data.password
+    ).first()
+
+    if not user:
+        db.close()
+        return {"error": "Credenziali non valide"}
+
+    playlist = db.query(Playlist).filter(
+        Playlist.id == user.playlist_id
+    ).first()
+
+    db.close()
+
+    if not playlist:
+        return {"error": "Playlist non trovata"}
+
+    return {
+        "username": user.username,
+        "playlist": playlist.name,
+        "url": playlist.url
+    }
+
 @app.get("/playlists/{playlist_id}/stats")
 def playlist_stats(playlist_id: int):
     db = SessionLocal()
