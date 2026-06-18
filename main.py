@@ -82,8 +82,8 @@ def create_playlist(playlist: PlaylistCreate):
         "url": new_playlist.url
     }
 
-    
-    @app.get("/playlists")
+
+@app.get("/playlists")
 def get_playlists():
     db = SessionLocal()
 
