@@ -31,7 +31,8 @@ def create_user(user: UserCreate):
     new_user = User(
     username=user.username,
     password=user.password,
-    email=user.email
+    email=user.email,
+    playlist_id=user.playlist_id
 )
 
     db.add(new_user)
@@ -44,7 +45,8 @@ def create_user(user: UserCreate):
     "id": new_user.id,
     "username": new_user.username,
     "password": new_user.password,
-    "email": new_user.email
+    "email": new_user.email,
+    "playlist_id": new_user.playlist_id
 }
 
 
