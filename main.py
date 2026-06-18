@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from database import engine, SessionLocal
 from models import Base, User, Playlist
+import requests
 
 Base.metadata.create_all(bind=engine)
 
@@ -101,3 +102,36 @@ def get_playlists():
     db.close()
 
     return result
+@app.get("/playlists/{playlist_id}/stats")
+def playlist_stats(playlist_id: int):
+    db = SessionLocal()
+
+    playlist = db.query(Playlist).filter(
+        Playlist.id == playlist_id
+    ).first()
+
+    db.close()
+
+    if not playlist:
+        return {"error": "Playlist non trovata"}
+
+    try:
+        response = requests.get(
+            playlist.url,
+            timeout=20
+        )
+
+        content = response.text
+
+        channels = content.count("#EXTINF")
+
+        return {
+            "playlist_id": playlist.id,
+            "name": playlist.name,
+            "channels": channels
+        }
+
+    except Exception as e:
+        return {
+            "error": str(e)
+        }
