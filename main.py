@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, Date
+from sqlalchemy import text
 from database import Base
 from datetime import date
 from fastapi import HTTPException
