@@ -37,7 +37,8 @@ def create_user(user: UserCreate):
     username=user.username,
     password=user.password,
     email=user.email,
-    playlist_id=user.playlist_id
+    playlist_id=user.playlist_id,
+    expire_date=user.expire_date
 )
 
     db.add(new_user)
