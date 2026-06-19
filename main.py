@@ -148,6 +148,13 @@ def login(user_data: LoginRequest):
         db.close()
         return {"error": "Credenziali non valide"}
 
+    if db_user.expire_date < date.today():
+        db.close()
+        raise HTTPException(
+            status_code=403,
+            detail="Abbonamento scaduto"
+        )
+
     playlist = db.query(Playlist).filter(
         Playlist.id == user.playlist_id
     ).first()
