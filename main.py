@@ -14,10 +14,12 @@ Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
 
+from typing import Optional
+
 class UserCreate(BaseModel):
     username: str
     password: str
-    email: str
+    email: Optional[str] = None
     playlist_id: int
     expire_date: date
     
