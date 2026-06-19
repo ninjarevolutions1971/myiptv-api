@@ -11,6 +11,7 @@ class User(Base):
     email = Column(String, unique=True, index=True)
     
     playlist_id = Column(Integer, ForeignKey("playlists.id"))
+    expire_date = Column(Date)
 
 
 class Playlist(Base):
