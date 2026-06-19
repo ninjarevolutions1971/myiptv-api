@@ -3,7 +3,11 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 
 DATABASE_URL = "postgresql://myiptv_user:VeKf23sPA6s1ccrgLg7I3FJijkG7FDzf@dpg-d8q1u8r6sc1c73b0g6cg-a.ohio-postgres.render.com/myiptv"
 
-engine = create_engine(DATABASE_URL)
+engine = create_engine(
+    DATABASE_URL,
+    connect_args={
+        "sslmode": "require"
+    }
 
 SessionLocal = sessionmaker(
     autocommit=False,
