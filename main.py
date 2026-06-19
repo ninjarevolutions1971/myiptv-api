@@ -153,7 +153,7 @@ def login(user_data: LoginRequest):
         db.close()
         return {"error": "Credenziali non valide"}
 
-    if db_user.expire_date < date.today():
+    if user.expire_date < date.today():
         db.close()
         raise HTTPException(
             status_code=403,
@@ -174,7 +174,6 @@ def login(user_data: LoginRequest):
         "playlist": playlist.name,
         "url": playlist.url
     }
-
 @app.get("/playlists/{playlist_id}/stats")
 def playlist_stats(playlist_id: int):
     db = SessionLocal()
