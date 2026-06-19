@@ -224,3 +224,6 @@ def fix_db():
         return {"error": str(e)}
     finally:
         db.close()
+        @app.get("/version")
+def version():
+    return {"version": "FIX-TEXT-001"}
