@@ -207,3 +207,19 @@ def playlist_stats(playlist_id: int):
         return {
             "error": str(e)
         }
+        from sqlalchemy import text
+
+@app.get("/fix-db")
+def fix_db():
+    db = SessionLocal()
+
+    try:
+        db.execute(
+            text("ALTER TABLE users ADD COLUMN IF NOT EXISTS expire_date DATE")
+        )
+        db.commit()
+        return {"message": "Database aggiornato"}
+    except Exception as e:
+        return {"error": str(e)}
+    finally:
+        db.close()
