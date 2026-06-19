@@ -14,6 +14,7 @@ class UserCreate(BaseModel):
     password: str
     email: str
     playlist_id: int
+    expire_date: date
     
 class PlaylistCreate(BaseModel):
     name: str
