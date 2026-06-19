@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, Date
 from database import Base
 
 
@@ -9,7 +9,7 @@ class User(Base):
     username = Column(String, unique=True, index=True)
     password = Column(String)
     email = Column(String, unique=True, index=True)
-    
+
     playlist_id = Column(Integer, ForeignKey("playlists.id"))
     expire_date = Column(Date)
 
